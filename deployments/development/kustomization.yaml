@@ -1,0 +1,4 @@
+resources:
+- ../base
+- mysql.yaml
+- nextcloud.yaml

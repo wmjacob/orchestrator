@@ -1,0 +1,61 @@
+namespace: home
+
+resources:
+- ../base
+- ./nextcloud.yaml
+- ./portfolio.yaml
+
+patches:
+- path: mysql-patch.yaml
+- path: nextcloud-patch-pv.yaml
+- path: portfolio-patch.yaml
+- target:
+    kind: Ingress
+    name: nextcloud
+  path: nextcloud-patch-tls.private.json
+- target:
+    kind: Ingress
+    name: portfolio
+  path: portfolio-patch-tls.private.json
+
+secretGenerator:
+  - name: env-secret
+    behavior: merge
+    env: .env
+    type: Opaque
+
+configMapGenerator:
+  - name: env-replacements
+    env: .replacements
+
+replacements:
+- source:
+    kind: ConfigMap
+    name: env-replacements
+    fieldPath: data.CERTIFICATE_EMAIL
+  targets:
+  - select:
+      kind: ClusterIssuer
+      name: letsencrypt-prod
+    fieldPaths:
+    - spec.acme.email
+- source:
+    kind: ConfigMap
+    name: env-replacements
+    fieldPath: data.CERTIFICATE_SERVER
+  targets:
+  - select:
+      kind: ClusterIssuer
+      name: letsencrypt-prod
+    fieldPaths:
+    - spec.acme.server
+- source:
+    kind: ConfigMap
+    name: env-replacements
+    fieldPath: data.PORTFOLIO_IMAGE
+  targets:
+  - select:
+      kind: Deployment
+      name: portfolio
+    fieldPaths:
+    - spec.template.spec.containers.0.image

@@ -1,0 +1,16 @@
+namespace: home
+
+resources:
+- mysql.yaml
+- nextcloud.yaml
+- portfolio.yaml
+
+secretGenerator:
+  - name: mysql-secret
+    files:
+      - mysql-secret=./.secret-mysql
+
+secretGenerator:
+  - name: env-secret
+    env: .env
+    type: Opaque
