@@ -4,6 +4,7 @@ resources:
 - ../base
 - ./nextcloud.yaml
 - ./portfolio.yaml
+- ./react-express.yaml
 
 patches:
 - path: mysql-patch.yaml
@@ -17,6 +18,10 @@ patches:
     kind: Ingress
     name: portfolio
   path: portfolio-patch-tls.private.json
+- target:
+    kind: Ingress
+    name: react-express
+  path: react-express-patch-tls.private.json
 
 secretGenerator:
   - name: env-secret
@@ -57,5 +62,15 @@ replacements:
   - select:
       kind: Deployment
       name: portfolio
+    fieldPaths:
+    - spec.template.spec.containers.0.image
+- source:
+    kind: ConfigMap
+    name: env-replacements
+    fieldPath: data.REACT_EXPRESS_IMAGE
+  targets:
+  - select:
+      kind: Deployment
+      name: react-express
     fieldPaths:
     - spec.template.spec.containers.0.image

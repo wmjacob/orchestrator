@@ -1,0 +1,36 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-express
+  template:
+    metadata:
+      labels:
+        app: react-express
+    spec:
+      containers:
+      - name: react-express
+        image: localhost:5000/react-express:latest
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+        - name: oracle-docker-registry
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-express
+spec:
+  type: ClusterIP
+  selector:
+    app: react-express
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8080

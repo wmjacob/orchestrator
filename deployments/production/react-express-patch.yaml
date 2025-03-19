@@ -1,0 +1,13 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-express
+spec:
+  template:
+    spec:
+      containers:
+      - name: react-express
+        image: $(REACT_EXPRESS_IMAGE)
+      imagePullSecrets:
+        - name: oracle-docker-registry

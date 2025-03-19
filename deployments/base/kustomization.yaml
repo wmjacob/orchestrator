@@ -4,6 +4,7 @@ resources:
 - mysql.yaml
 - nextcloud.yaml
 - portfolio.yaml
+- react-express.yaml
 
 secretGenerator:
   - name: mysql-secret

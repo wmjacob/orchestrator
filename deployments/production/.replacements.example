@@ -1,3 +1,4 @@
 CERTIFICATE_EMAIL=john@smith.com
 CERTIFICATE_SERVER=https://acme-v02.api.letsencrypt.org/directory
 PORTFOLIO_IMAGE=localhost:5000/portfolio:latest
+REACT_EXPRESS_IMAGE=localhost:5000/react-express:latest
