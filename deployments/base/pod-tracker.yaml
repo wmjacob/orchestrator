@@ -1,0 +1,7 @@
+apiVersion: crd.devops.toolbox/v1
+kind: PodTracker
+metadata:
+  namespace: home
+  name: example-podtracker
+spec:
+  # Add your spec fields here
